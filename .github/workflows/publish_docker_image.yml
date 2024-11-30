@@ -17,6 +17,9 @@ jobs:
       contents: read
       attestations: write
       id-token: write
+    env:
+      REGISTRY: noshita
+      IMAGE_NAME: slicersalt
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
