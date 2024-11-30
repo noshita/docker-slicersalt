@@ -5,11 +5,10 @@ ARG SLICERSALT_DIRECTORY=/usr/src/slicersalt
 ARG SLICERSALT_MODULE_VERSION=5.3
 ARG SLICERSALT_DOWNLOAD_URL=https://data.kitware.com/api/v1/item/67003a15fb903c47575a911b/download
 
-RUN apt update && apt install --no-install-recommends -y software-properties-common 
+RUN apt update && apt install --no-install-recommends -y software-properties-common
 RUN apt install --no-install-recommends -y wget libgl1-mesa-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
 
 RUN mkdir -p ${SLICERSALT_DIRECTORY} \
     && wget -O ${SLICERSALT_DIRECTORY}.tar.gz ${SLICERSALT_DOWNLOAD_URL}  \
