@@ -18,8 +18,8 @@ jobs:
       attestations: write
       id-token: write
     env:
-      REGISTRY: noshita
-      IMAGE_NAME: slicersalt
+      DOCKER_REGISTRY: noshita
+      DOCKER_IMAGE_NAME: slicersalt
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME}}
 
       - name: Build and push Docker image
         id: push
