@@ -9,7 +9,7 @@ docker pull noshita/slicersalt:latest
 ### GenParaMesh
 
 ```sh
-docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP -- INPUT_VOLUME OUTPUT_PARA_MESH OUTPUT_SURFACE_MASH
+docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP -- $INPUT_VOLUME $OUTPUT_PARA_MESH $OUTPUT_SURFACE_MASH
 ```
 
 * `HOST_DIR`: ホスト側の解析対象と出力先を含むディレクトリの絶対パス．もし入力と出力先が離れている場合は複数オプションを指定してマウントする．
@@ -43,7 +43,7 @@ parallel -j $N_JOB --progress "if [ -e $OUTPUT_DIR/{1.}_para.vtk ]; then echo sk
 ### ParaToSPHARMMesh
 
 ```sh
-docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt ParaToSPHARMMeshCLP --spharmDegree $SPHARM_DEGREE --subdivLevel $SUBDIV_LEVEL -- INPUT_PARA_MESH INPUT_SURFACE_MESH OUTPUT_DIRECTORY_BASENAME
+docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt ParaToSPHARMMeshCLP --spharmDegree $SPHARM_DEGREE --subdivLevel $SUBDIV_LEVEL -- $INPUT_PARA_MESH $INPUT_SURFACE_MESH $OUTPUT_DIRECTORY_BASENAME
 ```
 * `INPUT_PARA_MESH`, `INPUT_SURFACE_MESH`: GenParaMeshの出力結果．
 * `OUTPUT_DIRECTORY_BASENAME`: 出力先のディレクトリと出力ファイル名（ベース部分）をつなげたもの
