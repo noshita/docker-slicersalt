@@ -31,14 +31,26 @@ parallel -j $N_JOB "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersa
 * `INPUT_DIR`: 入力するボリュームデータが保存されているディレクトリ
 * `OUTPUT_DIR`: 出力先のディレクトリ
 * `N_JOB`: 並列実行するジョブ数．
-* `N_ITER`: GenParaMeshでのiteration数 
-
+* `N_ITER`: GenParaMeshでのiteration数
 
 `if-then-else`により，すでに処理済みのものをスキップすることができる．
 
 ```sh
 parallel -j $N_JOB --progress "if [ -e $OUTPUT_DIR/{1.}_para.vtk ]; then echo skip: $INPUT_DIR/{1}; else docker run -v $HOST_DIR:$CONTAINER_DIR noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk; fi" ::: ${INPUT_FILES[@]}
 ```
+
+
+起動時にIOの負荷が大きいなどのジョブは投入タイミングをずらすのが良い．
+
+`--delay`オプションにより制御できる．`--delay S`で，**少なくとも**`S`秒ずらして各ジョブを開始する．
+
+以下は，1.2秒以上ずらして各ジョブを実行する例．
+
+```sh
+parallel -j $N_JOB --delay 1.2 "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- GenParaMeshCLP -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk" ::: ${INPUT_FILES[@]}
+```
+
+* [Timing | GNU Parallel Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html#timing)
 
 ### ParaToSPHARMMesh
 
