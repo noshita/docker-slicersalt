@@ -23,7 +23,7 @@ docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --
 GNU parallelなどにより並列実行することができる．
 
 ```sh
-INPUT_FILES=($(ls $INPUT_DIR/*.nrrd))
+INPUT_FILES=($(ls $INPUT_DIR/*.nrrd | xargs -n 1 basename))
 
 parallel -j $N_JOB "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- GenParaMeshCLP -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk" ::: ${INPUT_FILES[@]}
 ```
