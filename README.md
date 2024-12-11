@@ -25,7 +25,7 @@ GNU parallelなどにより並列実行することができる．
 ```sh
 INPUT_FILES=($(ls $INPUT_DIR/*.nrrd | xargs -n 1 basename))
 
-parallel -j $N_JOB "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- GenParaMeshCLP -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk" ::: ${INPUT_FILES[@]}
+parallel -j $N_JOB "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk" ::: ${INPUT_FILES[@]}
 ```
 
 * `INPUT_DIR`: 入力するボリュームデータが保存されているディレクトリ
@@ -47,7 +47,7 @@ parallel -j $N_JOB --progress "if [ -e $OUTPUT_DIR/{1.}_para.vtk ]; then echo sk
 以下は，1.2秒以上ずらして各ジョブを実行する例．
 
 ```sh
-parallel -j $N_JOB --delay 1.2 "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- GenParaMeshCLP -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk" ::: ${INPUT_FILES[@]}
+parallel -j $N_JOB --delay 1.2 "docker run -v $HOST_DIR:$CONTAINER_DIR --rm noshita/slicersalt GenParaMeshCLP --iter $N_ITER -- $INPUT_DIR/{1} $OUTPUT_DIR/{1.}_para.vtk $OUTPUT_DIR/{1.}_surf.vtk" ::: ${INPUT_FILES[@]}
 ```
 
 * [Timing | GNU Parallel Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html#timing)
